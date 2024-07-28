@@ -24,17 +24,5 @@ export const useCategoryStore = defineStore("category", {
                 console.log(error);
             }
         },
-
-        // Update category
-        async onUpdate(categoryId) {
-            try {
-                await this.form.update(route("category.update", categoryId));
-                toast.success("Category successfully updated", {
-                    timeout: 3000,
-                });
-            } catch (error) {
-                console.log(error);
-            }
-        },
     },
 });

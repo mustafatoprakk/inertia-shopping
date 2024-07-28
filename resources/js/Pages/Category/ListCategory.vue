@@ -18,7 +18,7 @@
                 </svg>
                 </Link>
                 <!--delete-->
-                <button type="button"
+                <button type="button" @click="deleteCategory(category.id)"
                     class="text-lg font-medium text-blue-600 dark:text-gray-700 hover:dark:text-blue-700" tabindex="0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -33,9 +33,31 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, router, useForm } from '@inertiajs/vue3';
+import axios from 'axios';
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
+const form = useForm({})
 
 defineProps({
     categories: Array
 })
+
+// delete
+const deleteCategory = async (categoryId) => {
+    try {
+        if (confirm('Are you sure you want to delete this category?')) {
+            await form.delete(route('category.delete', categoryId));
+            toast.success("Category successfully deleted.", {
+                timeout: 3000,
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        toast.error("There was an error deleting the category.", {
+            timeout: 3000,
+        });
+    }
+}
 </script>
