@@ -15,7 +15,7 @@
                 <span class="sm:inline-block sm:h-screen sm:align-middle">&#8203;</span>
 
                 <div
-                    class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl hover:shadow-2xl duration-300 dark:bg-gray-300 sm:my-8 sm:w-full sm:max-w-md sm:p-6 sm:align-middle">
+                    class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl hover:shadow-2xl duration-300 dark:bg-gray-300 sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
                     <h3
                         class="text-xl text-center mt-3 pb-5 font-medium leading-6 text-gray-800 capitalize dark:text-gray-900">
                         New Category
@@ -34,13 +34,26 @@
 
                         <div class="mt-4 sm:flex sm:items-center sm:-mx-2 mb-2">
                             <button type="button" @click="isOpen = !isOpen"
-                                class="w-full px-4 py-3 text-md font-medium tracking-wide text-gray-200 capitalize transition-colors duration-300 transform border border-gray-200 rounded-md sm:w-1/2 sm:mx-2 dark:text-gray-900 dark:border-gray-700 dark:hover:bg-gray-200 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40">
-                                Cancel
+                                class="flex justify-center w-full px-4 py-3 mt-3 text-md font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-500 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="icon icon-tabler icons-tabler-filled icon-tabler-circle-x me-2">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
+                                </svg>
+                                <span>Cancel</span>
                             </button>
-
                             <button type="submit"
-                                class="w-full px-4 py-3 mt-3 text-md font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
-                                Create Category
+                                class="flex justify-center w-full px-4 py-3 mt-3 text-md font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-rotate me-2">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M19.95 11a8 8 0 1 0 -.5 4m.5 5v-5h-5" />
+                                </svg>
+                                <span>Create</span>
                             </button>
                         </div>
                     </form>

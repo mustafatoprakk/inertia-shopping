@@ -48,7 +48,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return Inertia::render("Category/ShowCategory", [
+            "category" => $category
+        ]);
     }
 
     /**
@@ -64,7 +66,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            "name" => ["required", "max:255"],
+            "description" => ["nullable"],
+        ]);
+
+        $category->update([
+            "name" => $request->name,
+            "description" => $request->description
+        ]);
+
+        return to_route("category.index");
     }
 
     /**
