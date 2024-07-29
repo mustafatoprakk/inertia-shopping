@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class ProductController extends Controller
 {
@@ -12,7 +17,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::orderBy("id", "DESC")->get();
+        $categories = Category::orderBy("id", "DESC")->get();
+        return Inertia::render("Product/Index", compact("products", "categories"));
     }
 
     /**
@@ -28,7 +35,35 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "category_id" => ["required"],
+            "name" => ["required"],
+            "description" => ["nullable"],
+            "stock" => ["nullable"],
+            "price" => ["required"],
+            "image" => ["required", "image", "mimes:png,jpg,jpeg,svg", "max:2048"],
+        ]);
+
+        if ($request->file("image")) {
+            $image = $request->file("image");
+            $imageName = time() . "." . $image->getClientOriginalExtension();
+            // create new image instance
+            $imgManager = new ImageManager(new Driver());
+            $imgSize = $imgManager->read($image);
+            $imgSize->cover(300, 200);
+            $imgSize->save(public_path("products/" . $imageName));
+        }
+
+        Product::create([
+            "category_id" => $request->category_id,
+            "name" => $request->name,
+            "description" => $request->description,
+            "stock" => $request->stock,
+            "price" => $request->price,
+            "image" => $imageName,
+        ]);
+
+        return redirect()->route('product.index');
     }
 
     /**
