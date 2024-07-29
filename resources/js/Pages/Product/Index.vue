@@ -12,6 +12,7 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <AddProduct :categories="categories" />
+                        <ListProduct :products="products" />
                     </div>
                 </div>
             </div>
@@ -23,6 +24,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import AddProduct from "./AddProduct.vue"
+import ListProduct from "./ListProduct.vue"
 
 defineProps({
     products: Array,
