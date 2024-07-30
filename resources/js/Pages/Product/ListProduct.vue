@@ -8,7 +8,8 @@
 
             <div class="flex justify-center mt-4">
                 <!--edit-->
-                <Link class="text-lg font-medium text-blue-600 dark:text-gray-700 hover:dark:text-blue-700 me-1"
+                <Link :href="route('product.edit', product.id)"
+                    class="text-lg font-medium text-blue-600 dark:text-gray-700 hover:dark:text-blue-700 me-1"
                     tabindex="0" role="link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
