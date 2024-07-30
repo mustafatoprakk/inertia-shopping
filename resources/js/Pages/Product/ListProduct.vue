@@ -18,7 +18,7 @@
                 </svg>
                 </Link>
                 <!--delete-->
-                <button type="button"
+                <button type="button" @click="deleteProduct(product.id)"
                     class="text-lg font-medium text-blue-600 dark:text-gray-700 hover:dark:text-blue-700" tabindex="0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
@@ -43,4 +43,16 @@ defineProps({
     products: Array
 })
 
+const deleteProduct = async (productId) => {
+    try {
+        if (confirm("Are you sure you want to delete this product?")) {
+            await form.delete(route('product.delete', productId))
+            toast.success("Product successfully updated", {
+                timeout: 3000,
+            });
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 </script>

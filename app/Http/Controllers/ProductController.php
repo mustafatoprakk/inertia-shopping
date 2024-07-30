@@ -130,6 +130,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        // mevcut görüntüyü silme
+        if ($product->image && file_exists(public_path("products/" . $product->image))) {
+            unlink(public_path("products/" . $product->image));
+        }
+        $product->delete();
+        return redirect()->route('product.index');
     }
 }
