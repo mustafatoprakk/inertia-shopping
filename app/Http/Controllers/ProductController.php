@@ -109,7 +109,7 @@ class ProductController extends Controller
             // create new image instance
             $imgManager = new ImageManager(new Driver());
             $imgSize = $imgManager->read($image);
-            $imgSize->cover(300, 200);
+            $imgSize->cover(800, 600);
             $imgSize->save(public_path("products/" . $imageName));
         }
 
