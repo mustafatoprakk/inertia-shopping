@@ -2,26 +2,18 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { useToast } from "vue-toastification";
+import { useCountCartItem } from "@/stores/cartCount.js"
 
 const toast = useToast();
-
-const form = useForm({
-    product_id: null
-})
 
 defineProps({
     products: Array
 })
 
+const cartItem = useCountCartItem()
+const form = cartItem.form
 const addToCart = async (productId) => {
-    try {
-        await form.post(route('product.cart', [form.product_id = productId]))
-        toast.success("Product added to cart", {
-            timeout: 3000,
-        });
-    } catch (error) {
-        console.log(error)
-    }
+    cartItem.addToCart(productId)
 }
 </script>
 

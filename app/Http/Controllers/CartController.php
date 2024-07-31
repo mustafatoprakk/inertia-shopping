@@ -16,6 +16,22 @@ class CartController extends Controller
         //
     }
 
+    // Count cart item
+    public function countCartItem()
+    {
+        $cartItems = Cart::where("user_id", Auth::id())
+            ->orderBy("id", "DESC")
+            ->get();
+
+        // topalam ürün miktarı
+        $totalQuantity = $cartItems->sum("quantity");
+
+        return response()->json([
+            "cartItems" => $cartItems,
+            "totalQuantity" => $totalQuantity
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

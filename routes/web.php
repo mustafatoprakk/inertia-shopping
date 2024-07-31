@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
     // cart
     Route::post("/product/add/cart", [CartController::class, "store"])->name("product.cart");
+    // count cart
+    Route::get("/cart/count", [CartController::class, "countCartItem"])->name("cart.count");
 });
 
 require __DIR__ . '/auth.php';

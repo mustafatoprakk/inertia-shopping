@@ -1,13 +1,25 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import axios from 'axios';
+import { useCountCartItem } from "@/stores/cartCount.js"
+
+const countItem = useCountCartItem()
 
 const showingNavigationDropdown = ref(false);
+
+const countCartItem = async () => {
+    countItem.countCartItem()
+}
+
+onMounted(() => {
+    countCartItem()
+})
 </script>
 
 <template>
@@ -82,7 +94,9 @@ const showingNavigationDropdown = ref(false);
                                         <path d="M6 5l14 1l-1 7h-13" />
                                     </svg>
                                     <span id="count"
-                                        class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                                        class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+                                        {{ countItem.count }}
+                                    </span>
                                 </div>
                                 <span>My Cart</span>
                                 </Link>
