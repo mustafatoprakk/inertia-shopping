@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -28,7 +29,34 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "product_id" => ["required"]
+        ]);
+
+        $userId = Auth::id();
+        $productId = $request->product_id;
+
+        // Ürün kullanıcı sepetinde olup olmadığını kontrol etme
+        $cartItem = Cart::where("user_id", $userId)
+            ->where("product_id", $productId)
+            ->first();
+
+        // Eğer ürün aynı kullanıcıda varsa yalnız quantity miktarını artır 
+        if ($cartItem) {
+            $cartItem->quantity += 1;
+            $cartItem->save();
+        } else {
+            // ürün sepette yoksa yeni bir tane oluştur
+            Cart::create(
+                [
+                    "user_id" => $userId,
+                    "product_id" => $productId,
+                    'quantity' => 1
+                ]
+            );
+        }
+
+        return redirect()->route("dashboard");
     }
 
     /**

@@ -1,10 +1,28 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
+
+const form = useForm({
+    product_id: null
+})
 
 defineProps({
     products: Array
 })
+
+const addToCart = async (productId) => {
+    try {
+        await form.post(route('product.cart', [form.product_id = productId]))
+        toast.success("Product added to cart", {
+            timeout: 3000,
+        });
+    } catch (error) {
+        console.log(error)
+    }
+}
 </script>
 
 <template>
@@ -37,7 +55,7 @@ defineProps({
 
                                 <div class="flex items-center justify-between px-3 py-2 bg-gray-200 dark:bg-gray-700">
                                     <span class="font-bold text-gray-800 dark:text-gray-200">${{ product.price }}</span>
-                                    <button
+                                    <button @click="addToCart(product.id)"
                                         class="px-2 py-1 text-xs font-semibold text-white uppercase transition-colors duration-300 transform bg-gray-800 rounded hover:bg-gray-700 dark:hover:bg-gray-600 focus:bg-gray-700 dark:focus:bg-gray-600 focus:outline-none">Add
                                         to cart</button>
                                 </div>

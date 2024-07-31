@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -40,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get("/product/edit/{product}", [ProductController::class, "edit"])->name("product.edit");
     Route::put("/product/update/{product}", [ProductController::class, "update"])->name("product.update");
     Route::delete("/product/delete/{product}", [ProductController::class, "destroy"])->name("product.delete");
+
+    // cart
+    Route::post("/product/add/cart", [CartController::class, "store"])->name("product.cart");
 });
 
 require __DIR__ . '/auth.php';
