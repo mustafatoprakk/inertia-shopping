@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class CartController extends Controller
 {
@@ -13,7 +14,37 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cartItems = Cart::with("product")
+            ->where("user_id", Auth::id())
+            ->orderBy("id", "DESC")
+            ->get();
+
+        $totalPrice = $cartItems->filter(function ($cartItem) {
+            return $cartItem->product !== null; // Product bilgisi olanları filtrele
+        })->sum(function ($cartItem) {
+            return $cartItem->product->price * $cartItem->quantity;
+        });
+
+        return Inertia::render("Cart/Index", compact("cartItems", "totalPrice"));
+    }
+
+    public function getIndex()
+    {
+        $cartItems = Cart::with("product")
+            ->where("user_id", Auth::id())
+            ->orderBy("id", "DESC")
+            ->get();
+
+        $totalPrice = $cartItems->filter(function ($cartItem) {
+            return $cartItem->product !== null; // Product bilgisi olanları filtrele
+        })->sum(function ($cartItem) {
+            return $cartItem->product->price * $cartItem->quantity;
+        });
+
+        return response()->json([
+            "cartItems" => $cartItems,
+            "totalPrice" => $totalPrice
+        ]);
     }
 
     // Count cart item
@@ -29,6 +60,42 @@ class CartController extends Controller
         return response()->json([
             "cartItems" => $cartItems,
             "totalQuantity" => $totalQuantity
+        ]);
+    }
+
+    // Sepetteki ürünlerin miktarını artırma
+    public function incrementQuantity($cartId)
+    {
+        $cartItemIncrement = Cart::where("id", $cartId)
+            ->where("user_id", Auth::id())
+            ->first();
+
+        if ($cartItemIncrement) {
+            $cartItemIncrement->quantity += 1;
+            $cartItemIncrement->save();
+        }
+
+        return response()->json([
+            "cartItemIncrement" => $cartItemIncrement
+        ]);
+    }
+
+    // Sepetteki ürünlerin miktarını azaltma
+    public function decrementQuantity($cartId)
+    {
+        $cartItemDecrement = Cart::where("id", $cartId)
+            ->where("user_id", Auth::id())
+            ->first();
+
+        if ($cartItemDecrement->quantity > 1) {
+            $cartItemDecrement->quantity -= 1;
+            $cartItemDecrement->save();
+        } else {
+            $cartItemDecrement->delete();
+        }
+
+        return response()->json([
+            "cartItemDecrement" => $cartItemDecrement
         ]);
     }
 

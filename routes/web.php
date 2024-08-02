@@ -46,6 +46,12 @@ Route::middleware('auth')->group(function () {
     Route::post("/product/add/cart", [CartController::class, "store"])->name("product.cart");
     // count cart
     Route::get("/cart/count", [CartController::class, "countCartItem"])->name("cart.count");
+    Route::get("/cart", [CartController::class, "index"])->name("cart.index");
+    Route::get("/cart/get/data", [CartController::class, "getIndex"])->name("cart.get.index");
+    // sepetteki ürün miktarını artırma
+    Route::post("/cart/increment/{cartId}", [CartController::class, "incrementQuantity"])->name("cart.increment");
+    // sepetteki ürün miktarını azaltma
+    Route::post("/cart/decrement/{cartId}", [CartController::class, "decrementQuantity"])->name("cart.decrement");
 });
 
 require __DIR__ . '/auth.php';

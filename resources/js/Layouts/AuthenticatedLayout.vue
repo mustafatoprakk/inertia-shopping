@@ -17,6 +17,10 @@ const countCartItem = async () => {
     countItem.countCartItem()
 }
 
+defineProps({
+    totalQuantity: Number
+})
+
 onMounted(() => {
     countCartItem()
 })
@@ -83,7 +87,7 @@ onMounted(() => {
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <!-- Settings Dropdown -->
                             <div>
-                                <Link class="relative flex items-center space-x-2">
+                                <Link :href="route('cart.index')" class="relative flex items-center space-x-2">
                                 <div class="relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" class="relative">
@@ -93,9 +97,9 @@ onMounted(() => {
                                         <path d="M17 17h-11v-14h-2" />
                                         <path d="M6 5l14 1l-1 7h-13" />
                                     </svg>
-                                    <span id="count"
+                                    <span id="count" v-if="totalQuantity"
                                         class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
-                                        {{ countItem.count }}
+                                        {{ totalQuantity }}
                                     </span>
                                 </div>
                                 <span>My Cart</span>
